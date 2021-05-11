@@ -1,5 +1,4 @@
 import {useState, useEffect} from "react";
-import Artist from "./Artist";
 import TrackDetail from "./TrackDetail";
 
 function ArtistDetail({match}) {
@@ -11,13 +10,13 @@ function ArtistDetail({match}) {
             .then(response => response.json())
             .then(json => {
                 setItem(json);
+                console.log(json);
             });
     }, [])
 
     return (<div>
         <h2>{item && item.artist.name}</h2>
         <h2>{item && item.artist.nationality}</h2>
-        <h2>{item && item.artist.image}</h2>
         <img src={item && item.artist.image}/>
 
         <h2>Tracks</h2>

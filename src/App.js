@@ -16,7 +16,6 @@ function App() {
     const [isPending, setIsPending] = useState(true)
 
     const onNewArtistHandler = function (artist) {
-        console.log(artist);
         const newData = [...data];
         newData.push(artist);
         setData(newData);
@@ -60,7 +59,7 @@ function App() {
 
             <Switch>
                 <Route path='/tracks'>
-                    
+
                 </Route>
                 <Route path='/playlists'>
                 </Route>

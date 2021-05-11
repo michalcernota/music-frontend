@@ -3,7 +3,7 @@ import {useState} from "react";
 function ArtistForm(props) {
     const [name, setName] = useState("")
     const [nationality, setNationality] = useState("")
-    const [file, setFile] = useState(null)
+    const [file, setFile] = useState("")
 
     const onSubmitHandler = event => {
         event.preventDefault()
@@ -11,12 +11,8 @@ function ArtistForm(props) {
         const newArtist = {
             name: name,
             nationality: nationality,
-            image: null
+            image: file
         }
-
-        const formData = new FormData();
-        formData.append('file', file);
-        console.log(formData);
 
         fetch("http://localhost:8080/artists/add", {
             method: 'POST',
@@ -25,23 +21,22 @@ function ArtistForm(props) {
             },
             body: JSON.stringify(newArtist)
         })
-            .then(r => r.json())
+            .then(r => {
+                if (r.ok) {
+                    return r.json();
+                }
+                throw new Error("Unable to get data: " + r.statusText);
+            })
             .then(json => {
                 newArtist.id = json.id;
-                console.log(json);
+                props.onNewArtist(newArtist);
             })
             .finally(() => {
-                props.onNewArtist(newArtist);
                 setName("");
                 setNationality("");
-                setFile(null);
+                setFile("");
             });
     }
-
-    const onFileChangeHandler = (e) => {
-        setFile(e.target.files[0]);
-        console.log(file);
-    };
 
     return (
         <form onSubmit={onSubmitHandler}>
@@ -51,7 +46,9 @@ function ArtistForm(props) {
             <input placeholder={"Nationality"} type={"text"} value={nationality} onChange={(e) => {
                 setNationality(e.target.value)
             }}/>
-            <input type={"file"} onChange={onFileChangeHandler}/>
+            <input placeholder={"Image"} type={"text"} value={file} onChange={(e) => {
+                setFile(e.target.value);
+            }}/>
             <input type={"submit"}/>
         </form>
     )
