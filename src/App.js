@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import ArtistForm from "./ArtistForm";
 import ArtistDetail from "./ArtistDetail";
+import Tracks from "./Tracks";
 
 function App() {
     const [data, setData] = useState([])
@@ -52,16 +53,17 @@ function App() {
                         <Link to="/tracks">Tracks</Link>
                     </li>
                     <li>
-                        <Link to="/playlists">Tracks</Link>
+                        <Link to="/playlists">Playlists</Link>
                     </li>
                 </ul>
             </nav>
 
             <Switch>
                 <Route path='/tracks'>
-
+                    <Tracks />
                 </Route>
                 <Route path='/playlists'>
+
                 </Route>
                 <Route path='/artist-detail/:id' component={ArtistDetail} />
                 <Route path="/">
