@@ -10,6 +10,7 @@ import {
 import ArtistForm from "./ArtistForm";
 import ArtistDetail from "./ArtistDetail";
 import Tracks from "./Tracks";
+import Playlists from "./Playlists";
 
 function App() {
     const [data, setData] = useState([])
@@ -63,7 +64,7 @@ function App() {
                     <Tracks />
                 </Route>
                 <Route path='/playlists'>
-
+                    <Playlists />
                 </Route>
                 <Route path='/artist-detail/:id' component={ArtistDetail} />
                 <Route path="/">
