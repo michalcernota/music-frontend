@@ -11,6 +11,9 @@ import ArtistForm from "./ArtistForm";
 import ArtistDetail from "./ArtistDetail";
 import Tracks from "./Tracks";
 import Playlists from "./Playlists";
+import LoginForm from "./LoginForm";
+import {useAuth} from "./AuthContext";
+import SignUp from "./Signup";
 
 function App() {
     const [data, setData] = useState([])
@@ -56,6 +59,15 @@ function App() {
                     <li>
                         <Link to="/playlists">Playlists</Link>
                     </li>
+                    <li>
+                        <Link to="/login">Login</Link>
+                    </li>
+                    <li>
+                        <Link to="/signup">Sign Up</Link>
+                    </li>
+                    <li>
+                        <Link to="/profile">Profile</Link>
+                    </li>
                 </ul>
             </nav>
 
@@ -65,6 +77,15 @@ function App() {
                 </Route>
                 <Route path='/playlists'>
                     <Playlists />
+                </Route>
+                <Route path='/login'>
+                    <LoginForm />
+                </Route>
+                <Route path='/signup'>
+                    <SignUp />
+                </Route>
+                <Route path='/profile'>
+                    <Profile />
                 </Route>
                 <Route path='/artist-detail/:id' component={ArtistDetail} />
                 <Route path="/">
@@ -85,6 +106,19 @@ function App() {
 
         </Router>
     );
+}
+
+function Profile() {
+    const { user, token } = useAuth()
+    return <>
+        <h2>Profile</h2>
+        <div>
+            <strong>User</strong> {JSON.stringify(user)}
+        </div>
+        <div>
+            <strong>Token</strong> {token}
+        </div>
+    </>;
 }
 
 export default App;
