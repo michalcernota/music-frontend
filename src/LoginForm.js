@@ -41,7 +41,6 @@ function LoginForm() {
             .catch((err) => {
                 setIsError(err.message)
             })
-
     }
 
     if (isLoggedIn) {
@@ -59,7 +58,6 @@ function LoginForm() {
         </div>
 
     )
-
 }
 
 export default LoginForm;

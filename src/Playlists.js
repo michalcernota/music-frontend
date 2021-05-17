@@ -1,9 +1,13 @@
 import {useState, useEffect} from "react";
+import {useAuth} from "./AuthContext";
+import PlaylistForm from "./PlaylistForm";
+import {Link} from "react-router-dom";
 
 function Playlists() {
-    const[data, setData] = useState([]);
+    const [data, setData] = useState([]);
     const [error, setError] = useState();
     const [isPending, setIsPending] = useState(true);
+    const { user, token } = useAuth()
 
     useEffect(() => {
         fetch("http://localhost:8080/playlists")
@@ -27,10 +31,12 @@ function Playlists() {
             {data.map(item => {
                 return(
                     <div key={item.id}>
-                        <h2>{item.name}</h2>
+                        <Link to={`playlist-detail/${item.id}`}><h2>{item.name}</h2></Link>
                     </div>
                 )
             })}
+
+            <PlaylistForm />
         </div>
     )
 }

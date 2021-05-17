@@ -5,7 +5,7 @@ function Artist({artist, onClickHandler}) {
     return (<div>
         <Link to={`artist-detail/${artist.id}`}><h2>{artist.name}</h2></Link>
         <div>{artist.nationality}</div>
-        <img src={artist.file}/>
+        <img alt='Artist' src={artist.file}/>
         <button onClick={() => {
             fetch(`http://localhost:8080/artists/${artist.id}`, {method: 'DELETE'})
                 .then(r => r.json())

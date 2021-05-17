@@ -3,7 +3,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link, Redirect
 } from "react-router-dom";
 import ArtistDetail from "./ArtistDetail";
 import Tracks from "./Tracks";
@@ -12,9 +12,59 @@ import LoginForm from "./LoginForm";
 import {useAuth} from "./AuthContext";
 import SignUp from "./Signup";
 import Artists from "./Artists";
+import PlaylistDetail from "./PlaylistDetail";
 
 function App() {
-    return (
+
+    const { user } = useAuth()
+
+    const authenticatedRoutes = (
+        <Router>
+            <div>
+                <nav>
+                    <ul>
+                        <li>
+                            <Link to="/artists">Artists</Link>
+                        </li>
+                        <li>
+                            <Link to="/tracks">Tracks</Link>
+                        </li>
+                        <li>
+                            <Link to="/playlists">Playlists</Link>
+                        </li>
+                        <li>
+                            <Link to='/logout'>Logout</Link>
+                        </li>
+                        <li>
+                            <Link to="/profile">Profile</Link>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <Switch>
+                <Route path="/logout">
+                    <Logout />
+                </Route>
+                <Route path='/profile'>
+                    <Profile />
+                </Route>
+                <Route path='/tracks'>
+                    <Tracks />
+                </Route>
+                <Route path='/artist-detail/:id' component={ArtistDetail} />
+                <Route path="/artists">
+                    <Artists />
+                </Route>
+                <Route path='/playlist-detail/:id' component={PlaylistDetail} />
+                <Route path={['/', '/playlists']}>
+                    <Playlists />
+                </Route>
+            </Switch>
+        </Router>
+    )
+
+    const nonAuthenticatedRoutes = (
         <Router>
             <nav>
                 <ul>
@@ -33,9 +83,6 @@ function App() {
                     <li>
                         <Link to="/signup">Sign Up</Link>
                     </li>
-                    <li>
-                        <Link to="/profile">Profile</Link>
-                    </li>
                 </ul>
             </nav>
 
@@ -49,20 +96,25 @@ function App() {
                 <Route path='/signup'>
                     <SignUp />
                 </Route>
-                <Route path='/profile'>
-                    <Profile />
-                </Route>
                 <Route path='/artist-detail/:id' component={ArtistDetail} />
                 <Route path="/artists">
                     <Artists />
                 </Route>
+                <Route path='/playlist-detail/:id' component={PlaylistDetail} />
                 <Route path={['/', '/playlists']}>
                     <Playlists />
                 </Route>
             </Switch>
-
         </Router>
-    );
+    )
+
+    return (<>{user ? authenticatedRoutes : nonAuthenticatedRoutes}</>)
+}
+
+function Logout() {
+    const { removeTokens } = useAuth()
+    removeTokens()
+    return <Redirect to="/"/>;
 }
 
 function Profile() {

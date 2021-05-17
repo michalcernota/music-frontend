@@ -37,7 +37,7 @@ function ArtistDetail({match}) {
 
             <h2>{artist && artist.name}</h2>
             <h2>{artist && artist.nationality}</h2>
-            <img src={artist && artist.image}/>
+            <img alt='Artist' src={artist && artist.image}/>
 
             <h2>Tracks</h2>
             {tracks && tracks.map(item => {
