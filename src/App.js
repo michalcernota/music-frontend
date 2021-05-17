@@ -5,14 +5,14 @@ import {
     Route,
     Link, Redirect
 } from "react-router-dom";
-import ArtistDetail from "./ArtistDetail";
-import Tracks from "./Tracks";
-import Playlists from "./Playlists";
-import LoginForm from "./LoginForm";
-import {useAuth} from "./AuthContext";
-import SignUp from "./Signup";
-import Artists from "./Artists";
-import PlaylistDetail from "./PlaylistDetail";
+import ArtistDetail from "./components/artist/ArtistDetail";
+import Tracks from "./components/track/Tracks";
+import Playlists from "./components/playlist/Playlists";
+import LoginForm from "./components/auth/LoginForm";
+import {useAuth} from "./components/auth/AuthContext";
+import SignUp from "./components/auth/Signup";
+import Artists from "./components/artist/Artists";
+import PlaylistDetail from "./components/playlist/PlaylistDetail";
 
 function App() {
 

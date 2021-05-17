@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
-import TrackDetail from "./TrackDetail";
-import TrackForm from "./TrackForm";
+import TrackDetail from "../track/TrackDetail";
+import TrackForm from "../track/TrackForm";
 
 function ArtistDetail({match}) {
 

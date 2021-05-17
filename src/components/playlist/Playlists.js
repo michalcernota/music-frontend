@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {useAuth} from "./AuthContext";
+import {useAuth} from "../auth/AuthContext";
 import PlaylistForm from "./PlaylistForm";
 import {Link} from "react-router-dom";
 
