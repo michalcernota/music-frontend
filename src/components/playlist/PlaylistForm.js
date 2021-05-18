@@ -20,14 +20,11 @@ function PlaylistForm({onNewPlaylist}) {
             ownerName: user.sub
         }
 
-        console.log(token);
-        console.log(newPlaylist);
-
         fetch("http://localhost:8080/playlists/add", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token,
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(newPlaylist)
         })
@@ -38,7 +35,8 @@ function PlaylistForm({onNewPlaylist}) {
                 throw new Error("Unable to get data: " + r.statusText);
             })
             .then(json => {
-                onNewPlaylist(json);
+                newPlaylist.id = json.id;
+                onNewPlaylist(newPlaylist);
             })
             .catch((err) => {
                 setIsError(err.message);
@@ -51,7 +49,7 @@ function PlaylistForm({onNewPlaylist}) {
     return (
         <>
             <form onSubmit={onSubmitHandler}>
-                <input placeholder={'Playlist name'} type={'text'} onChange={
+                <input placeholder={'Playlist name'} type={'text'} value={playlistName} onChange={
                     (e) => {
                         setPlaylistName(e.target.value)
                     }

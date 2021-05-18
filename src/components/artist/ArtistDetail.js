@@ -10,7 +10,7 @@ function ArtistDetail({match}) {
     const [isPending, setIsPending] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/artist-detail/${match.params.id}`)
+        fetch(`http://localhost:8080/artists/detail/${match.params.id}`)
             .then(response => response.json())
             .then(json => {
                 setArtist(json.artist);
@@ -25,6 +25,7 @@ function ArtistDetail({match}) {
     }
 
     const onNewTrackHandler = function (newTrack) {
+        console.log(JSON.stringify(newTrack));
         const newTracks = [...tracks];
         newTracks.push(newTrack);
         setTracks(newTracks);

@@ -1,9 +1,11 @@
 import {useState} from "react";
+import {useAuth} from "../auth/AuthContext";
 
 function ArtistForm(props) {
     const [name, setName] = useState("")
     const [nationality, setNationality] = useState("")
     const [file, setFile] = useState("")
+    const {token} = useAuth();
 
     const onSubmitHandler = event => {
         event.preventDefault()
@@ -17,7 +19,8 @@ function ArtistForm(props) {
         fetch("http://localhost:8080/artists/add", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(newArtist)
         })

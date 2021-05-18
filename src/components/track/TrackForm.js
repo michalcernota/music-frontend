@@ -1,9 +1,11 @@
 import {useState} from "react";
+import {useAuth} from "../auth/AuthContext";
 
 function TrackForm({artist, errorHandler, onNewTrackHandler}) {
 
     const[trackName, setTrackName] = useState("");
     const[trackPath, setTrackPath] = useState("");
+    const {token} = useAuth();
 
     const onSubmitHandler = event => {
         event.preventDefault()
@@ -17,7 +19,8 @@ function TrackForm({artist, errorHandler, onNewTrackHandler}) {
         fetch("http://localhost:8080/tracks/add", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(newTrack)
         })

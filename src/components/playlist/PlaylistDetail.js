@@ -9,7 +9,7 @@ function PlaylistDetail({match}) {
     const [playlist, setPlaylist] = useState({});
     const [tracks, setTracks] = useState([]);
     const [allTracks, setAllTracks] = useState([]);
-    const {user, token} = useAuth();
+    const {token} = useAuth();
 
     useEffect(() => {
         fetch(`http://localhost:8080/playlists/${match.params.id}`)
