@@ -13,6 +13,8 @@ import {useAuth} from "./components/auth/AuthContext";
 import SignUp from "./components/auth/Signup";
 import Artists from "./components/artist/Artists";
 import PlaylistDetail from "./components/playlist/PlaylistDetail";
+import Profile from "./components/auth/Profile";
+import Logout from "./components/auth/Logout";
 
 function App() {
 
@@ -109,25 +111,6 @@ function App() {
     )
 
     return (<>{user ? authenticatedRoutes : nonAuthenticatedRoutes}</>)
-}
-
-function Logout() {
-    const { removeTokens } = useAuth()
-    removeTokens()
-    return <Redirect to="/"/>;
-}
-
-function Profile() {
-    const { user, token } = useAuth()
-    return <>
-        <h2>Profile</h2>
-        <div>
-            <strong>User</strong> {JSON.stringify(user)}
-        </div>
-        <div>
-            <strong>Token</strong> {token}
-        </div>
-    </>;
 }
 
 export default App;
