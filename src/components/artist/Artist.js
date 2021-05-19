@@ -7,7 +7,7 @@ function Artist({artist, onClickHandler}) {
     return (<div>
         <Link to={`artist-detail/${artist.id}`}><h2>{artist.name}</h2></Link>
         <div>{artist.nationality}</div>
-        <img alt='Artist' src={artist.file}/>
+        <img alt='Artist' src={artist.pathToImage}/>
         <button onClick={() => {
             fetch(`http://localhost:8080/artists/${artist.id}`,
                 {

@@ -1,28 +1,27 @@
 import {useState} from "react";
 import {useAuth} from "../auth/AuthContext";
 
-function ArtistForm(props) {
+function ArtistForm({onNewArtist}) {
     const [name, setName] = useState("")
     const [nationality, setNationality] = useState("")
-    const [file, setFile] = useState("")
+    const [selectedFile, setSelectedFile] = useState();
+    const [error, setError] = useState()
     const {token} = useAuth();
 
     const onSubmitHandler = event => {
         event.preventDefault()
 
-        const newArtist = {
-            name: name,
-            nationality: nationality,
-            image: file
-        }
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('name', name);
+        formData.append('nationality', nationality);
 
         fetch("http://localhost:8080/artists/add", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify(newArtist)
+            body: formData
         })
             .then(r => {
                 if (r.ok) {
@@ -31,29 +30,39 @@ function ArtistForm(props) {
                 throw new Error("Unable to get data: " + r.statusText);
             })
             .then(json => {
-                newArtist.id = json.id;
-                props.onNewArtist(newArtist);
+                const newArtist = {
+                    id: json.id,
+                    name: json.name,
+                    nationality: json.nationality,
+                    pathToImage: json.pathToImage
+                }
+
+                onNewArtist(newArtist);
+
             })
+            .catch((err) => setError(err.message))
             .finally(() => {
                 setName("");
                 setNationality("");
-                setFile("");
+                setSelectedFile(null);
             });
     }
 
     return (
-        <form onSubmit={onSubmitHandler}>
-            <input placeholder={"Name"} type={"text"} value={name} onChange={(e) => {
-                setName(e.target.value)
-            }}/>
-            <input placeholder={"Nationality"} type={"text"} value={nationality} onChange={(e) => {
-                setNationality(e.target.value)
-            }}/>
-            <input placeholder={"Image"} type={"text"} value={file} onChange={(e) => {
-                setFile(e.target.value);
-            }}/>
-            <input type={"submit"}/>
-        </form>
+        <div>
+            {error && <div>{error}</div>}
+
+            <form onSubmit={onSubmitHandler}>
+                <input placeholder={"Name"} type={"text"} value={name} onChange={(e) => {
+                    setName(e.target.value)
+                }}/>
+                <input placeholder={"Nationality"} type={"text"} value={nationality} onChange={(e) => {
+                    setNationality(e.target.value)
+                }}/>
+                <input type="file" name="file" onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                <input type={"submit"}/>
+            </form>
+        </div>
     )
 }
 

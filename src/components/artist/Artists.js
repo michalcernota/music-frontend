@@ -40,7 +40,9 @@ function Artists() {
 
             {data.map(item => {
                 return(
-                    <Artist key={item.id} artist={item} onClickHandler={onDeleteArtistHandler}/>
+                    <div key={item.id}>
+                        <Artist key={item.id} artist={item} onClickHandler={onDeleteArtistHandler}/>
+                    </div>
                 )
             })}
 
