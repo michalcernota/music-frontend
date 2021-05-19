@@ -24,10 +24,11 @@ function ArtistDetail({match}) {
         setError(error);
     }
 
-    const onNewTrackHandler = function (newTrack) {
-        console.log(JSON.stringify(newTrack));
+    const onNewTracksHandler = function (addedTracks) {
         const newTracks = [...tracks];
-        newTracks.push(newTrack);
+        addedTracks.map(addedTrack => {
+            newTracks.push(addedTrack);
+        })
         setTracks(newTracks);
     }
 
@@ -38,7 +39,7 @@ function ArtistDetail({match}) {
 
             <h2>{artist && artist.name}</h2>
             <h2>{artist && artist.nationality}</h2>
-            <img alt='Artist' src={artist && artist.image}/>
+            <img alt='Artist' src={artist && artist.pathToImage}/>
 
             <h2>Tracks</h2>
             {tracks && tracks.map(item => {
@@ -47,7 +48,7 @@ function ArtistDetail({match}) {
                 )
             })}
 
-            {artist && <TrackForm artist={artist} errorHandler={errorHandler} onNewTrackHandler={onNewTrackHandler}/>}
+            {artist && <TrackForm artist={artist} errorHandler={errorHandler} onNewTrackHandler={onNewTracksHandler}/>}
         </div>)
 }
 
