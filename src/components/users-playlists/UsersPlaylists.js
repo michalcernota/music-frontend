@@ -1,16 +1,20 @@
-import {useState, useEffect} from "react";
 import {useAuth} from "../auth/AuthContext";
-import PlaylistForm from "./PlaylistForm";
+import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
-function Playlists() {
+function UsersPlaylists() {
     const [data, setData] = useState([]);
     const [error, setError] = useState();
     const [isPending, setIsPending] = useState(true);
     const { token } = useAuth()
 
     useEffect(() => {
-        fetch("http://localhost:8080/playlists")
+        fetch("http://localhost:8080/usersPlaylists",
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -29,25 +33,19 @@ function Playlists() {
         setData(newData);
     }
 
-    const onNewPlaylistHandler = function (playlist) {
-        const newData = [...data];
-        newData.push(playlist);
-        setData(newData);
-    }
-
     return (
         <div>
             {isPending && "Loading data..."}
             {error && <div>{error}</div>}
 
-            <h2>Playlists</h2>
+            <h2>My Playlists</h2>
             {data.map(item => {
                 return(
                     <div key={item.id}>
-                        <Link to={`playlist-detail/${item.id}`}><h2>{item.name}</h2></Link>
+                        <Link to={`/player/${item.id}`}><h2>{item.playlistName}</h2></Link>
 
                         <button onClick={() => {
-                            fetch(`http://localhost:8080/playlists/delete/${item.id}`, {
+                            fetch(`http://localhost:8080/usersPlaylists/remove/${item.id}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Authorization': 'Bearer ' + token
@@ -61,31 +59,12 @@ function Playlists() {
                                     throw new Error("Unable to get data: " + r.statusText);
                                 })
                                 .catch((err) => {setError(err.message)});
-                        }}>Delete</button>
-
-                        <button onClick={() => {
-                            fetch(`http://localhost:8080/usersPlaylists/add/${item.id}`, {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': 'Bearer ' + token
-                                }
-                            })
-                                .then(r => {
-                                    if (r.ok) {
-                                        alert("Playlist added to your playlists.")
-                                        return;
-                                    }
-                                    throw new Error("Unable to get data: " + r.statusText);
-                                })
-                                .catch((err) => {setError(err.message)});
-                        }}>Add to my playlists</button>
+                        }}>Remove</button>
                     </div>
                 )
             })}
-
-            <PlaylistForm onNewPlaylist={onNewPlaylistHandler}/>
         </div>
     )
 }
 
-export default Playlists;
+export default UsersPlaylists;

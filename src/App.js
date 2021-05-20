@@ -3,7 +3,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link, Redirect
+    Link
 } from "react-router-dom";
 import ArtistDetail from "./components/artist/ArtistDetail";
 import Tracks from "./components/track/Tracks";
@@ -15,6 +15,8 @@ import Artists from "./components/artist/Artists";
 import PlaylistDetail from "./components/playlist/PlaylistDetail";
 import Profile from "./components/auth/Profile";
 import Logout from "./components/auth/Logout";
+import UsersPlaylists from "./components/users-playlists/UsersPlaylists";
+import MyPlaylistDetail from "./components/users-playlists/MyPlaylistDetail";
 
 function App() {
 
@@ -40,6 +42,9 @@ function App() {
                         <li>
                             <Link to="/profile">Profile</Link>
                         </li>
+                        <li>
+                            <Link to="/user/playlists">My Playlists</Link>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -58,7 +63,11 @@ function App() {
                 <Route path="/artists">
                     <Artists />
                 </Route>
-                <Route path='/playlist-detail/:id' component={PlaylistDetail} />
+                <Route exact path='/playlist-detail/:id' component={PlaylistDetail} />
+                <Route path='/user/playlists'>
+                    <UsersPlaylists />
+                </Route>
+                <Route exact path='/player/:id' component={MyPlaylistDetail}/>
                 <Route path={['/', '/playlists']}>
                     <Playlists />
                 </Route>
