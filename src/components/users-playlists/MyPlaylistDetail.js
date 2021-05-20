@@ -28,7 +28,7 @@ function MyPlaylistDetail({match}) {
             {isPending && "Loading data..."}
             {error && <div>{error}</div>}
 
-            {!isPending && <AudioPlayer tracks={tracks}/>}
+            {(!isPending && tracks.length > 0) && <AudioPlayer tracks={tracks}/>}
         </div>
     )
 
