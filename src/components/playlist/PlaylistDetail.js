@@ -9,7 +9,7 @@ function PlaylistDetail({match}) {
     const [playlist, setPlaylist] = useState({});
     const [tracks, setTracks] = useState([]);
     const [allTracks, setAllTracks] = useState([]);
-    const {token} = useAuth();
+    const {user, token} = useAuth();
 
     useEffect(() => {
         fetch(`http://localhost:8080/playlists/${match.params.id}`)
@@ -61,6 +61,7 @@ function PlaylistDetail({match}) {
                 return(
                     <div key={item.id}>
                         {item.trackName}
+                        {user && playlist.ownerName === user.sub &&
                         <button onClick={() => {
                             const trackOfPlaylist = {
                                 id: item.id
@@ -85,9 +86,12 @@ function PlaylistDetail({match}) {
                                     onRemoveTrackFromPlaylist(trackOfPlaylist);
                                     setError("");
                                 })
-                                .catch((err) => {setError(err.message)});
+                                .catch((err) => {
+                                    setError(err.message)
+                                });
 
                         }}>Remove</button>
+                        }
                     </div>
                 )
             })}
@@ -97,35 +101,39 @@ function PlaylistDetail({match}) {
                 return(
                     <div key={item.id}>
                         {item.name}
-                        <button onClick={() => {
-                            const trackOfPlaylist = {
-                                trackId: item.id,
-                                playlistId: playlist.id,
-                                trackName: item.name
-                            }
+                        {user && playlist.ownerName === user.sub &&
+                            <button onClick={() => {
+                                const trackOfPlaylist = {
+                                    trackId: item.id,
+                                    playlistId: playlist.id,
+                                    trackName: item.name
+                                }
 
-                            fetch("http://localhost:8080/playlists/addTrack", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': 'Bearer ' + token
-                                },
-                                body: JSON.stringify(trackOfPlaylist)
-                            })
-                                .then(r => {
-                                    if (r.ok) {
-                                        return r.json();
-                                    }
-                                    throw new Error("Unable to get data: " + r.statusText);
+                                fetch("http://localhost:8080/playlists/addTrack", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'Bearer ' + token
+                                    },
+                                    body: JSON.stringify(trackOfPlaylist)
                                 })
-                                .then(json => {
-                                    trackOfPlaylist.id = json.id;
-                                    onAddTrackToPlaylist(trackOfPlaylist);
-                                    setError("");
-                                })
-                                .catch((err) => {setError(err.message)});
+                                    .then(r => {
+                                        if (r.ok) {
+                                            return r.json();
+                                        }
+                                        throw new Error("Unable to get data: " + r.statusText);
+                                    })
+                                    .then(json => {
+                                        trackOfPlaylist.id = json.id;
+                                        onAddTrackToPlaylist(trackOfPlaylist);
+                                        setError("");
+                                    })
+                                    .catch((err) => {
+                                        setError(err.message)
+                                    });
 
-                        }}>Add</button>
+                            }}>Add</button>
+                        }
                     </div>
                 )
             })}

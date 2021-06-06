@@ -7,7 +7,7 @@ function Playlists() {
     const [data, setData] = useState([]);
     const [error, setError] = useState();
     const [isPending, setIsPending] = useState(true);
-    const { token } = useAuth()
+    const {user, token} = useAuth()
 
     useEffect(() => {
         fetch("http://localhost:8080/playlists")
@@ -42,10 +42,11 @@ function Playlists() {
 
             <h2>Playlists</h2>
             {data.map(item => {
-                return(
+                return (
                     <div key={item.id}>
                         <Link to={`playlist-detail/${item.id}`}><h2>{item.name}</h2></Link>
 
+                        {user && item.ownerName === user.sub &&
                         <button onClick={() => {
                             fetch(`http://localhost:8080/playlists/delete/${item.id}`, {
                                 method: 'DELETE',
@@ -60,9 +61,13 @@ function Playlists() {
                                     }
                                     throw new Error("Unable to get data: " + r.statusText);
                                 })
-                                .catch((err) => {setError(err.message)});
+                                .catch((err) => {
+                                    setError(err.message)
+                                });
                         }}>Delete</button>
+                        }
 
+                        {user &&
                         <button onClick={() => {
                             fetch(`http://localhost:8080/usersPlaylists/add/${item.id}`, {
                                 method: 'POST',
@@ -77,8 +82,11 @@ function Playlists() {
                                     }
                                     throw new Error("Unable to get data: " + r.statusText);
                                 })
-                                .catch((err) => {setError(err.message)});
+                                .catch((err) => {
+                                    setError(err.message)
+                                });
                         }}>Add to my playlists</button>
+                        }
                     </div>
                 )
             })}
