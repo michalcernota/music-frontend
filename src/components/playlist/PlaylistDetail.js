@@ -58,7 +58,7 @@ function PlaylistDetail({match}) {
 
             <h2>Tracks of playlist</h2>
             {tracks.map(item => {
-                return(
+                return (
                     <div key={item.id}>
                         {item.trackName}
                         {user && playlist.ownerName === user.sub &&
@@ -96,12 +96,14 @@ function PlaylistDetail({match}) {
                 )
             })}
 
-            <h2>All tracks</h2>
-            {allTracks.map(item => {
-                return(
-                    <div key={item.id}>
-                        {item.name}
-                        {user && playlist.ownerName === user.sub &&
+            {user && user === playlist.owner &&
+            <div>
+                <h2>All tracks</h2>
+                {allTracks.map(item => {
+                    return (
+                        <div key={item.id}>
+                            {item.name}
+                            {user && playlist.ownerName === user.sub &&
                             <button onClick={() => {
                                 const trackOfPlaylist = {
                                     trackId: item.id,
@@ -133,10 +135,11 @@ function PlaylistDetail({match}) {
                                     });
 
                             }}>Add</button>
-                        }
-                    </div>
-                )
-            })}
+                            }
+                        </div>
+                    )
+                })}
+            </div>}
         </div>)
 }
 
