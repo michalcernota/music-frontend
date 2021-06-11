@@ -35,7 +35,7 @@ function Artists() {
             .catch((err) => setError(err.message));
 
         if (user) {
-            fetch(`http://localhost:8080/userInfo/${user.sub}`, {
+            fetch(`http://localhost:8080/user/${user.sub}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token

@@ -69,7 +69,7 @@ function Playlists() {
 
                         {user &&
                         <button onClick={() => {
-                            fetch(`http://localhost:8080/usersPlaylists/add/${item.id}`, {
+                            fetch(`http://localhost:8080/user/playlists/${item.id}`, {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': 'Bearer ' + token

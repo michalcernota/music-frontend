@@ -9,7 +9,7 @@ function UsersPlaylists() {
     const { token } = useAuth()
 
     useEffect(() => {
-        fetch("http://localhost:8080/usersPlaylists",
+        fetch("http://localhost:8080/user/playlists",
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -45,7 +45,7 @@ function UsersPlaylists() {
                         <Link to={`/player/${item.id}`}><h2>{item.playlistName}</h2></Link>
 
                         <button onClick={() => {
-                            fetch(`http://localhost:8080/usersPlaylists/remove/${item.id}`, {
+                            fetch(`http://localhost:8080/user/playlists/${item.id}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Authorization': 'Bearer ' + token

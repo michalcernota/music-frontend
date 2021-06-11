@@ -9,7 +9,7 @@ function MyPlaylistDetail({match}) {
     const { token } = useAuth();
 
     useEffect(() => {
-        fetch(`http://localhost:8080/usersPlaylists/${match.params.id}/tracks`,
+        fetch(`http://localhost:8080/user/playlists/${match.params.id}`,
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
