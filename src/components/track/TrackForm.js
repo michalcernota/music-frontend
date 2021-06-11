@@ -37,7 +37,7 @@ function TrackForm({artist, errorHandler, onNewTrackHandler}) {
 
     return (
         <form onSubmit={onSubmitHandler}>
-            <input type={"file"} multiple onChange={(e) => setSelectedFiles(e.target.files)}/>
+            <input type={"file"} accept={".mp3"} multiple onChange={(e) => setSelectedFiles(e.target.files)}/>
             <input type={"submit"}/>
         </form>
     )

@@ -10,10 +10,17 @@ function ArtistDetail({match}) {
     const [isPending, setIsPending] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/artists/detail/${match.params.id}`)
+        fetch(`http://localhost:8080/artists/${match.params.id}`)
             .then(response => response.json())
             .then(json => {
-                setArtist(json.artist);
+                const artist = {
+                    id: json.id,
+                    name: json.name,
+                    nationality: json.nationality,
+                    pathToImage: json.pathToImage
+                }
+
+                setArtist(artist);
                 setTracks(json.tracks);
             })
             .catch((err) => setError(err.message))

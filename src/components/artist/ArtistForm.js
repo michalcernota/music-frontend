@@ -16,7 +16,7 @@ function ArtistForm({onNewArtist}) {
         formData.append('name', name);
         formData.append('nationality', nationality);
 
-        fetch("http://localhost:8080/artists/add", {
+        fetch("http://localhost:8080/artists", {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -59,7 +59,7 @@ function ArtistForm({onNewArtist}) {
                 <input placeholder={"Nationality"} type={"text"} value={nationality} onChange={(e) => {
                     setNationality(e.target.value)
                 }}/>
-                <input type="file" name="file" onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                <input type="file" accept={'image/png'} name="file" onChange={(e) => setSelectedFile(e.target.files[0])}/>
                 <input type={"submit"}/>
             </form>
         </div>
