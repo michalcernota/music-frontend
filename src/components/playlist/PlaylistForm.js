@@ -20,7 +20,7 @@ function PlaylistForm({onNewPlaylist}) {
             ownerName: user.sub
         }
 
-        fetch("http://localhost:8080/playlists/add", {
+        fetch("http://localhost:8080/playlists", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

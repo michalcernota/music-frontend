@@ -15,7 +15,13 @@ function PlaylistDetail({match}) {
         fetch(`http://localhost:8080/playlists/${match.params.id}`)
             .then(response => response.json())
             .then(json => {
-                setPlaylist(json.playlist);
+                const playlist = {
+                    id: json.id,
+                    name: json.name,
+                    ownerName: json.ownerName
+                }
+
+                setPlaylist(playlist);
                 setTracksCount(json.tracksCount);
                 setTracks(json.tracksOfPlaylist);
             })
@@ -24,7 +30,7 @@ function PlaylistDetail({match}) {
         fetch("http://localhost:8080/tracks")
             .then(response => response.json())
             .then(json => {
-                setAllTracks(json);
+                    setAllTracks(json);
             })
             .catch((err) => setError(err.message))
             .finally(() => setIsPending(false));
@@ -67,7 +73,7 @@ function PlaylistDetail({match}) {
                                 id: item.id
                             }
 
-                            fetch("http://localhost:8080/playlists/deleteTrack", {
+                            fetch("http://localhost:8080/playlists/tracks", {
                                 method: 'DELETE',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -96,7 +102,7 @@ function PlaylistDetail({match}) {
                 )
             })}
 
-            {user && user === playlist.owner &&
+            {user && user.sub === playlist.ownerName &&
             <div>
                 <h2>All tracks</h2>
                 {allTracks.map(item => {
@@ -111,7 +117,7 @@ function PlaylistDetail({match}) {
                                     trackName: item.name
                                 }
 
-                                fetch("http://localhost:8080/playlists/addTrack", {
+                                fetch("http://localhost:8080/playlists/tracks", {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',

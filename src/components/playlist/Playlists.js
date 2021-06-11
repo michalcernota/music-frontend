@@ -48,7 +48,7 @@ function Playlists() {
 
                         {user && item.ownerName === user.sub &&
                         <button onClick={() => {
-                            fetch(`http://localhost:8080/playlists/delete/${item.id}`, {
+                            fetch(`http://localhost:8080/playlists/${item.id}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Authorization': 'Bearer ' + token
