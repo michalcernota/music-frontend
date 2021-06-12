@@ -69,17 +69,12 @@ function PlaylistDetail({match}) {
                         {item.trackName}
                         {user && playlist.ownerName === user.sub &&
                         <button onClick={() => {
-                            const trackOfPlaylist = {
-                                id: item.id
-                            }
 
-                            fetch(`${process.env.REACT_APP_BASE_URI}/playlists/tracks`, {
+                            fetch(`${process.env.REACT_APP_BASE_URI}/playlists/tracks/${item.id}`, {
                                 method: 'DELETE',
                                 headers: {
-                                    'Content-Type': 'application/json',
                                     'Authorization': 'Bearer ' + token
-                                },
-                                body: JSON.stringify(trackOfPlaylist)
+                                }
                             })
                                 .then(r => {
                                     if (r.ok) {
@@ -88,8 +83,8 @@ function PlaylistDetail({match}) {
                                     throw new Error("Unable to get data: " + r.statusText);
                                 })
                                 .then(json => {
-                                    trackOfPlaylist.id = json.id;
-                                    onRemoveTrackFromPlaylist(trackOfPlaylist);
+                                    console.log(json);
+                                    onRemoveTrackFromPlaylist(json);
                                     setError("");
                                 })
                                 .catch((err) => {

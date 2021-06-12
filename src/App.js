@@ -17,6 +17,8 @@ import Profile from "./components/auth/Profile";
 import Logout from "./components/auth/Logout";
 import UsersPlaylists from "./components/users-playlists/UsersPlaylists";
 import MyPlaylistDetail from "./components/users-playlists/MyPlaylistDetail";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Navbar, Nav} from "react-bootstrap";
 
 function App() {
 
@@ -25,28 +27,20 @@ function App() {
     const authenticatedRoutes = (
         <Router>
             <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/artists">Artists</Link>
-                        </li>
-                        <li>
-                            <Link to="/tracks">Tracks</Link>
-                        </li>
-                        <li>
-                            <Link to="/playlists">Playlists</Link>
-                        </li>
-                        <li>
-                            <Link to='/logout'>Logout</Link>
-                        </li>
-                        <li>
-                            <Link to="/profile">Profile</Link>
-                        </li>
-                        <li>
-                            <Link to="/user/playlists">My Playlists</Link>
-                        </li>
-                    </ul>
-                </nav>
+                <Navbar bg={"dark"} variant={"dark"}>
+                    <Navbar.Brand as={Link} to="/">Music Share</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="mr-auto">
+                            <Nav.Link as={Link} to="/artists">Artists</Nav.Link>
+                            <Nav.Link as={Link} to="/tracks">Tracks</Nav.Link>
+                            <Nav.Link as={Link} to="/playlists">Playlists</Nav.Link>
+                            <Nav.Link as={Link} to="/user/playlists">My playlists</Nav.Link>
+                            <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
+                            <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
             </div>
 
             <Switch>
@@ -77,25 +71,19 @@ function App() {
 
     const nonAuthenticatedRoutes = (
         <Router>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/artists">Artists</Link>
-                    </li>
-                    <li>
-                        <Link to="/tracks">Tracks</Link>
-                    </li>
-                    <li>
-                        <Link to="/playlists">Playlists</Link>
-                    </li>
-                    <li>
-                        <Link to="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link to="/signup">Sign Up</Link>
-                    </li>
-                </ul>
-            </nav>
+            <Navbar bg={"dark"} variant={"dark"}>
+                <Navbar.Brand as={Link} to="/">Music Share</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link as={Link} to="/artists">Artists</Nav.Link>
+                        <Nav.Link as={Link} to="/tracks">Tracks</Nav.Link>
+                        <Nav.Link as={Link} to="/playlists">Playlists</Nav.Link>
+                        <Nav.Link as={Link} to="/login">Profile</Nav.Link>
+                        <Nav.Link as={Link} to="/signup">Logout</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
 
             <Switch>
                 <Route path='/tracks'>
