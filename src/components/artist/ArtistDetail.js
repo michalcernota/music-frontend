@@ -1,5 +1,4 @@
 import {useState, useEffect} from "react";
-import TrackDetail from "../track/TrackDetail";
 import TrackForm from "../track/TrackForm";
 
 function ArtistDetail({match}) {
@@ -51,7 +50,7 @@ function ArtistDetail({match}) {
             <h2>Tracks</h2>
             {tracks && tracks.map(item => {
                 return (
-                    <TrackDetail key={item.id} track={item}/>
+                    <div key={item.id}>{item.name}</div>
                 )
             })}
 
