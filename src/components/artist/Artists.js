@@ -24,7 +24,7 @@ function Artists() {
     }
 
     useEffect(() => {
-        fetch("http://localhost:8080/artists")
+        fetch(`${process.env.REACT_APP_BASE_URI}/artists`)
             .then(response => {
                 if (response.ok) {
                     return response.json()
@@ -35,7 +35,7 @@ function Artists() {
             .catch((err) => setError(err.message));
 
         if (user) {
-            fetch(`http://localhost:8080/user/${user.sub}`, {
+            fetch(`${process.env.REACT_APP_BASE_URI}/user/${user.sub}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token

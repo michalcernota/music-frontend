@@ -20,7 +20,7 @@ function PlaylistForm({onNewPlaylist}) {
             ownerName: user.sub
         }
 
-        fetch("http://localhost:8080/playlists", {
+        fetch(`${process.env.REACT_APP_BASE_URI}/playlists`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

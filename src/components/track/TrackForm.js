@@ -15,7 +15,7 @@ function TrackForm({artist, errorHandler, onNewTrackHandler}) {
             formData.append('files', selectedFiles[i])
         }
 
-        fetch("http://localhost:8080/tracks", {
+        fetch(`${process.env.REACT_APP_BASE_URI}/tracks`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token

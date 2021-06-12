@@ -10,7 +10,7 @@ function Playlists() {
     const {user, token} = useAuth()
 
     useEffect(() => {
-        fetch("http://localhost:8080/playlists")
+        fetch(`${process.env.REACT_APP_BASE_URI}/playlists`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -48,7 +48,7 @@ function Playlists() {
 
                         {user && item.ownerName === user.sub &&
                         <button onClick={() => {
-                            fetch(`http://localhost:8080/playlists/${item.id}`, {
+                            fetch(`${process.env.REACT_APP_BASE_URI}/playlists/${item.id}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Authorization': 'Bearer ' + token
@@ -69,7 +69,7 @@ function Playlists() {
 
                         {user &&
                         <button onClick={() => {
-                            fetch(`http://localhost:8080/user/playlists/${item.id}`, {
+                            fetch(`${process.env.REACT_APP_BASE_URI}/user/playlists/${item.id}`, {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': 'Bearer ' + token

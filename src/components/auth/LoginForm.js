@@ -20,7 +20,7 @@ function LoginForm() {
     function postLogin(e) {
         e.preventDefault()
 
-        fetch(`http://localhost:8080/authenticate`,
+        fetch(`${process.env.REACT_APP_BASE_URI}/authenticate`,
             {
                 method: 'POST',
                 headers: {

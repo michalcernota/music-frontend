@@ -16,7 +16,7 @@ function ArtistForm({onNewArtist}) {
         formData.append('name', name);
         formData.append('nationality', nationality);
 
-        fetch("http://localhost:8080/artists", {
+        fetch(`${process.env.REACT_APP_BASE_URI}/artists`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token

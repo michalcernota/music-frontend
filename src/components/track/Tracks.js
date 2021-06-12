@@ -9,7 +9,7 @@ function Tracks() {
     const {token} = useAuth();
 
     useEffect(() => {
-        fetch("http://localhost:8080/tracks")
+        fetch(`${process.env.REACT_APP_BASE_URI}/tracks`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -40,7 +40,7 @@ function Tracks() {
                     <div key={item.id}>
                         <h2>{item.name}</h2>
                         <button onClick={() => {
-                            fetch(`http://localhost:8080/tracks/${item.id}`, {
+                            fetch(`${process.env.REACT_APP_BASE_URI}/tracks/${item.id}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Authorization': 'Bearer ' + token

@@ -12,7 +12,7 @@ function PlaylistDetail({match}) {
     const {user, token} = useAuth();
 
     useEffect(() => {
-        fetch(`http://localhost:8080/playlists/${match.params.id}`)
+        fetch(`${process.env.REACT_APP_BASE_URI}/playlists/${match.params.id}`)
             .then(response => response.json())
             .then(json => {
                 const playlist = {
@@ -27,7 +27,7 @@ function PlaylistDetail({match}) {
             })
             .catch((err) => setError(err.message));
 
-        fetch("http://localhost:8080/tracks")
+        fetch(`${process.env.REACT_APP_BASE_URI}/tracks`)
             .then(response => response.json())
             .then(json => {
                     setAllTracks(json);
@@ -73,7 +73,7 @@ function PlaylistDetail({match}) {
                                 id: item.id
                             }
 
-                            fetch("http://localhost:8080/playlists/tracks", {
+                            fetch(`${process.env.REACT_APP_BASE_URI}/playlists/tracks`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ function PlaylistDetail({match}) {
                                     trackName: item.name
                                 }
 
-                                fetch("http://localhost:8080/playlists/tracks", {
+                                fetch(`${process.env.REACT_APP_BASE_URI}/playlists/tracks`, {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',

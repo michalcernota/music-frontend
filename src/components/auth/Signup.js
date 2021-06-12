@@ -19,7 +19,7 @@ function SignUp() {
             emailAddress: email
         }
 
-        fetch(`http://localhost:8080/signup`,
+        fetch(`${process.env.REACT_APP_BASE_URI}/signup`,
             {
                 method: 'POST',
                 headers: {

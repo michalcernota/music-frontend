@@ -11,7 +11,7 @@ function Artist({artist, onClickHandler, userRole}) {
 
         {userRole && userRole === 'ROLE_ADMIN' &&
         <button onClick={() => {
-            fetch(`http://localhost:8080/artists/${artist.id}`,
+            fetch(`${process.env.REACT_APP_BASE_URI}/artists/${artist.id}`,
                 {
                     method: 'DELETE',
                     headers: {
