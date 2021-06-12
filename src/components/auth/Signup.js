@@ -28,18 +28,15 @@ function SignUp() {
                 body: JSON.stringify(newUser)
             })
             .then(response => {
-                console.log(response);
                 if (response.ok) {
                     return response.json();
                 }
                 throw new Error(`Unable to get data: ${response.statusText}`);
             })
             .then(json => {
-                console.log(json);
                 setSignedUp(true);
             })
             .catch((err) => {
-                console.log(err.message);
                 setError(err.message);
             })
     }

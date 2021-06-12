@@ -15,7 +15,7 @@ function TrackForm({artist, errorHandler, onNewTrackHandler}) {
             formData.append('files', selectedFiles[i])
         }
 
-        fetch("http://localhost:8080/tracks/add", {
+        fetch("http://localhost:8080/tracks", {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token

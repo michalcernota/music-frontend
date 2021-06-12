@@ -40,7 +40,7 @@ function Tracks() {
                     <div key={item.id}>
                         <h2>{item.name}</h2>
                         <button onClick={() => {
-                            fetch(`http://localhost:8080/tracks/remove/${item.id}`, {
+                            fetch(`http://localhost:8080/tracks/${item.id}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Authorization': 'Bearer ' + token
