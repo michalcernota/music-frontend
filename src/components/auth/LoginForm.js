@@ -1,20 +1,23 @@
-import { Redirect } from "react-router-dom";
-import { useAuth } from "./AuthContext";
-import React, { useState } from 'react';
+import {Redirect} from "react-router-dom";
+import {useAuth} from "./AuthContext";
+import React, {useState} from 'react';
+import {Form, Button, Container, Row, Alert, Col} from 'react-bootstrap';
 
 function LoginForm() {
 
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isError, setIsError] = useState(false);
     const [data, setData] = useState({});
-    const { setTokens } = useAuth();
+    const {setTokens} = useAuth();
 
     const handleInputChange = (event) => {
+        console.log(event.target);
+        console.log(event.target.name);
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        data[name] = value
-        setData({ ...data })
+        data[name] = value;
+        setData({...data})
     }
 
     function postLogin(e) {
@@ -48,15 +51,37 @@ function LoginForm() {
     }
 
     return (
-        <div>
-            <form onSubmit={postLogin}>
-                <input placeholder={"Username"} type={"text"} name={"username"} onChange={handleInputChange}/>
-                <input placeholder={"Password"} type={"password"} name={"password"} onChange={handleInputChange}/>
-                <button>Login</button>
-                {isError}
-            </form>
-        </div>
-
+        <Container>
+            <Row className={"mt-2"}>
+                <Col>
+                    <h2>Login</h2>
+                </Col>
+            </Row>
+            <Row className={"mt-3"}>
+                <Col>
+                    <Form onSubmit={postLogin}>
+                        <Form.Group controlId="formUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control name={"username"} type={"text"} placeholder={"Enter username"}
+                                          onChange={handleInputChange}/>
+                        </Form.Group>
+                        <Form.Group controlId="formPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control name={"password"} type={"password"} placeholder="Password"
+                                          onChange={handleInputChange}/>
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+            <Row className={"mt-5"}>
+                <Alert type={"danger"}>
+                    {isError}
+                </Alert>
+            </Row>
+        </Container>
     )
 }
 

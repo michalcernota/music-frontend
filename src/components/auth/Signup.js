@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Redirect} from "react-router-dom";
+import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
 
 function SignUp() {
     const [username, setUsername] = useState("");
@@ -46,28 +47,56 @@ function SignUp() {
     }
 
     return (
-        <div>
-            <h2>Signup</h2>
-            <form onSubmit={signUpHandler}>
-                <input placeholder={'Username'} type={'text'} onChange={(e) => {
-                    setUsername(e.target.value)
-                }}/>
-                <input placeholder={'E-mail address'} type={'email'} onChange={(e) => {
-                    setEmail(e.target.value)
-                }}/>
-                <input placeholder={'Password'} type={'password'} onChange={(e) => {
-                    setPassword(e.target.value)
-                }}/>
-                <input placeholder={'Confirm password'} type={'password'} onChange={(e) => {
-                    setConfirmedPassword(e.target.value)
-                }}/>
-                <input type={'Submit'}/>
-            </form>
-
-            {error && error}
-        </div>
+        <Container>
+            <Row className={"mt-2"}>
+                <Col>
+                    <h2>Signup</h2>
+                </Col>
+            </Row>
+            <Row>
+                <Col className={"mt-3"}>
+                    <Form onSubmit={signUpHandler}>
+                        <Form.Group controlId="formUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type={"text"} onChange={(e) => {
+                                setUsername(e.target.value)
+                            }}/>
+                        </Form.Group>
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>E-Mail</Form.Label>
+                            <Form.Control type={"email"} onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}/>
+                        </Form.Group>
+                        <Form.Group controlId="formPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type={"password"} onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}/>
+                        </Form.Group>
+                        <Form.Group controlId="formPassword">
+                            <Form.Label>Confirm password</Form.Label>
+                            <Form.Control type={"password"} onChange={(e) => {
+                                setConfirmedPassword(e.target.value)
+                            }}/>
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+            {error &&
+            <Row>
+                <Col>
+                    <Alert variant={"danger"}>
+                        {error}
+                    </Alert>
+                </Col>
+            </Row>
+            }
+        </Container>
     )
-
 }
 
 export default SignUp;

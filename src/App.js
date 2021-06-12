@@ -79,8 +79,8 @@ function App() {
                         <Nav.Link as={Link} to="/artists">Artists</Nav.Link>
                         <Nav.Link as={Link} to="/tracks">Tracks</Nav.Link>
                         <Nav.Link as={Link} to="/playlists">Playlists</Nav.Link>
-                        <Nav.Link as={Link} to="/login">Profile</Nav.Link>
-                        <Nav.Link as={Link} to="/signup">Logout</Nav.Link>
+                        <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                        <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
