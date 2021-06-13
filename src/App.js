@@ -22,48 +22,46 @@ import {Navbar, Nav} from "react-bootstrap";
 
 function App() {
 
-    const { user } = useAuth()
+    const {user} = useAuth()
 
     const authenticatedRoutes = (
         <Router>
-            <div>
-                <Navbar bg={"dark"} variant={"dark"}>
-                    <Navbar.Brand as={Link} to="/">Music Share</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Nav.Link as={Link} to="/artists">Artists</Nav.Link>
-                            <Nav.Link as={Link} to="/tracks">Tracks</Nav.Link>
-                            <Nav.Link as={Link} to="/playlists">Playlists</Nav.Link>
-                            <Nav.Link as={Link} to="/user/playlists">My playlists</Nav.Link>
-                            <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
-                            <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            </div>
+            <Navbar bg={"dark"} variant={"dark"}>
+                <Navbar.Brand as={Link} to="/">Music Share</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link as={Link} to="/artists">Artists</Nav.Link>
+                        <Nav.Link as={Link} to="/tracks">Tracks</Nav.Link>
+                        <Nav.Link as={Link} to="/playlists">Playlists</Nav.Link>
+                        <Nav.Link as={Link} to="/user/playlists">My playlists</Nav.Link>
+                        <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
+                        <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
 
             <Switch>
                 <Route path="/logout">
-                    <Logout />
+                    <Logout/>
                 </Route>
                 <Route path='/profile'>
-                    <Profile />
+                    <Profile/>
                 </Route>
                 <Route path='/tracks'>
-                    <Tracks />
+                    <Tracks/>
                 </Route>
-                <Route path='/artist-detail/:id' component={ArtistDetail} />
+                <Route path='/artist-detail/:id' component={ArtistDetail}/>
                 <Route path="/artists">
-                    <Artists />
+                    <Artists/>
                 </Route>
-                <Route exact path='/playlist-detail/:id' component={PlaylistDetail} />
+                <Route exact path='/playlist-detail/:id' component={PlaylistDetail}/>
                 <Route path='/user/playlists'>
-                    <UsersPlaylists />
+                    <UsersPlaylists/>
                 </Route>
                 <Route exact path='/player/:id' component={MyPlaylistDetail}/>
                 <Route path={['/', '/playlists']}>
-                    <Playlists />
+                    <Playlists/>
                 </Route>
             </Switch>
         </Router>
@@ -73,7 +71,7 @@ function App() {
         <Router>
             <Navbar bg={"dark"} variant={"dark"}>
                 <Navbar.Brand as={Link} to="/">Music Share</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/artists">Artists</Nav.Link>
@@ -87,21 +85,21 @@ function App() {
 
             <Switch>
                 <Route path='/tracks'>
-                    <Tracks />
+                    <Tracks/>
                 </Route>
                 <Route path='/login'>
-                    <LoginForm />
+                    <LoginForm/>
                 </Route>
                 <Route path='/signup'>
-                    <SignUp />
+                    <SignUp/>
                 </Route>
-                <Route path='/artist-detail/:id' component={ArtistDetail} />
+                <Route path='/artist-detail/:id' component={ArtistDetail}/>
                 <Route path="/artists">
-                    <Artists />
+                    <Artists/>
                 </Route>
-                <Route path='/playlist-detail/:id' component={PlaylistDetail} />
+                <Route path='/playlist-detail/:id' component={PlaylistDetail}/>
                 <Route path={['/', '/playlists']}>
-                    <Playlists />
+                    <Playlists/>
                 </Route>
             </Switch>
         </Router>

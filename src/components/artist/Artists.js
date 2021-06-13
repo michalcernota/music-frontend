@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import Artist from "./Artist";
 import ArtistForm from "./ArtistForm";
 import {useAuth} from "../auth/AuthContext";
+import {Alert} from "react-bootstrap";
 
 function Artists() {
     const [data, setData] = useState([])
@@ -59,20 +60,20 @@ function Artists() {
 
     return(
         <div>
-            {isPending && "Loading data..."}
-            {error && <div>{error}</div>}
+            <h2>Artists</h2>
+            {isPending && <Alert variant={"info"}>"Loading data..."</Alert>}
 
             {data.map(item => {
                 return(
-                    <div key={item.id}>
                         <Artist key={item.id} artist={item} onClickHandler={onDeleteArtistHandler} userRole={userRole}/>
-                    </div>
                 )
             })}
 
             {userRole && userRole === 'ROLE_ADMIN' &&
                 <ArtistForm onNewArtist={onNewArtistHandler}/>
             }
+
+            {error && <Alert variant={"danger"}>{error}</Alert>}
         </div>
     )
 }

@@ -74,7 +74,7 @@ function SignUp() {
                                 setPassword(e.target.value)
                             }}/>
                         </Form.Group>
-                        <Form.Group controlId="formPassword">
+                        <Form.Group controlId="formConfirmPassword">
                             <Form.Label>Confirm password</Form.Label>
                             <Form.Control type={"password"} onChange={(e) => {
                                 setConfirmedPassword(e.target.value)
