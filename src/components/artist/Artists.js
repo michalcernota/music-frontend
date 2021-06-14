@@ -2,14 +2,14 @@ import {useEffect, useState} from "react";
 import Artist from "./Artist";
 import ArtistForm from "./ArtistForm";
 import {useAuth} from "../auth/AuthContext";
-import {Alert} from "react-bootstrap";
+import {Alert, CardGroup, Container, Row} from "react-bootstrap";
 
 function Artists() {
     const [data, setData] = useState([])
     const [userRole, setUserRole] = useState()
     const [error, setError] = useState()
     const [isPending, setIsPending] = useState(true)
-    const { user, token } = useAuth()
+    const {user, token} = useAuth()
 
     const onNewArtistHandler = function (artist) {
         const newData = [...data];
@@ -58,23 +58,34 @@ function Artists() {
 
     }, [])
 
-    return(
-        <div>
-            <h2>Artists</h2>
-            {isPending && <Alert variant={"info"}>"Loading data..."</Alert>}
+    return (
+        <Container>
+            <Row className={"mt-3"}>
+                <h2>Artists</h2>
+            </Row>
 
-            {data.map(item => {
-                return(
+            <Row className={"mt-2"}>
+                {isPending && <Alert variant={"info"}>"Loading data..."</Alert>}
+            </Row>
+
+            <Row>
+                <CardGroup className="flex-lg-row">
+                {data.map(item => {
+                    return (
                         <Artist key={item.id} artist={item} onClickHandler={onDeleteArtistHandler} userRole={userRole}/>
-                )
-            })}
+                    )
+                })}
+                </CardGroup>
+            </Row>
 
-            {userRole && userRole === 'ROLE_ADMIN' &&
+            <Row>
+                {userRole && userRole === 'ROLE_ADMIN' &&
                 <ArtistForm onNewArtist={onNewArtistHandler}/>
-            }
+                }
+            </Row>
 
             {error && <Alert variant={"danger"}>{error}</Alert>}
-        </div>
+        </Container>
     )
 }
 

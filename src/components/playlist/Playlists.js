@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import {useAuth} from "../auth/AuthContext";
 import PlaylistForm from "./PlaylistForm";
 import {Link} from "react-router-dom";
+import {Alert, Button, Col, Container, Row} from "react-bootstrap";
 
 function Playlists() {
     const [data, setData] = useState([]);
@@ -36,63 +37,73 @@ function Playlists() {
     }
 
     return (
-        <div>
+        <Container className={"mt-3"}>
             {isPending && "Loading data..."}
-            {error && <div>{error}</div>}
+            {error && <Alert variant={"danger"}>{error}</Alert>}
 
-            <h2>Playlists</h2>
+            <Row>
+                <h2>Playlists</h2>
+            </Row>
             {data.map(item => {
                 return (
-                    <div key={item.id}>
+                    <Row key={item.id}>
                         <Link to={`playlist-detail/${item.id}`}><h2>{item.name}</h2></Link>
 
-                        {user && item.ownerName === user.sub &&
-                        <button onClick={() => {
-                            fetch(`${process.env.REACT_APP_BASE_URI}/playlists/${item.id}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': 'Bearer ' + token
-                                }
-                            })
-                                .then(r => {
-                                    if (r.ok) {
-                                        onDeletePlaylistHandler(item.id);
-                                        return;
+                        {user && item && item.ownerName !== user.sub &&
+                        <Col>
+                            <Button variant={"primary"} onClick={() => {
+                                fetch(`${process.env.REACT_APP_BASE_URI}/playlists/${item.id}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Authorization': 'Bearer ' + token
                                     }
-                                    throw new Error("Unable to get data: " + r.statusText);
                                 })
-                                .catch((err) => {
-                                    setError(err.message)
-                                });
-                        }}>Delete</button>
+                                    .then(r => {
+                                        if (r.ok) {
+                                            onDeletePlaylistHandler(item.id);
+                                            return;
+                                        }
+                                        throw new Error("Unable to get data: " + r.statusText);
+                                    })
+                                    .catch((err) => {
+                                        setError(err.message)
+                                    });
+                            }}>Delete</Button>
+                        </Col>
                         }
 
-                        {user &&
-                        <button onClick={() => {
-                            fetch(`${process.env.REACT_APP_BASE_URI}/user/playlists/${item.id}`, {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': 'Bearer ' + token
-                                }
-                            })
-                                .then(r => {
-                                    if (r.ok) {
-                                        alert("Playlist added to your playlists.")
-                                        return;
+                        {user && item && item.ownerName !== user.sub &&
+                        <Col>
+                            <Button variant={"primary"} onClick={() => {
+                                fetch(`${process.env.REACT_APP_BASE_URI}/user/playlists/${item.id}`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Authorization': 'Bearer ' + token
                                     }
-                                    throw new Error("Unable to get data: " + r.statusText);
                                 })
-                                .catch((err) => {
-                                    setError(err.message)
-                                });
-                        }}>Add to my playlists</button>
+                                    .then(r => {
+                                        if (r.ok) {
+                                            return;
+                                        }
+                                        throw new Error("Unable to get data: " + r.statusText);
+                                    })
+                                    .catch((err) => {
+                                        setError(err.message)
+                                    });
+                            }}>Add to my playlists
+                            </Button>
+                        </Col>
                         }
-                    </div>
+                    </Row>
                 )
             })}
 
-            <PlaylistForm onNewPlaylist={onNewPlaylistHandler}/>
-        </div>
+            <Row>
+                <Col>
+                    <PlaylistForm onNewPlaylist={onNewPlaylistHandler}/>
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

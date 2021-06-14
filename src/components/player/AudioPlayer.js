@@ -1,18 +1,19 @@
 import AudioControls from "./AudioControls";
 import {useEffect, useRef, useState} from "react";
+import {Container, Row} from "react-bootstrap";
 
-const AudioPlayer = ({ tracks }) => {
+const AudioPlayer = ({tracks}) => {
     const [trackIndex, setTrackIndex] = useState(0);
     const [trackProgress, setTrackProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    const { name, artistName, trackPath } = tracks[trackIndex];
+    const {name, artistName, trackPath} = tracks[trackIndex];
 
     const audioRef = useRef(new Audio(trackPath));
     const intervalRef = useRef();
     const isReady = useRef(false);
 
-    const { duration } = audioRef.current;
+    const {duration} = audioRef.current;
 
     const currentPercentage = duration
         ? `${(trackProgress / duration) * 100}%`
@@ -94,30 +95,36 @@ const AudioPlayer = ({ tracks }) => {
     }, []);
 
     return (
-        <div className="audio-player">
+        <Container className="audio-player">
             <div className="track-info">
-                <h2 className="title">{name}</h2>
-                <h3 className="artist">{artistName}</h3>
+                <Row className={"mt-auto"}>
+                    <h2 className="title">{name}</h2>
+                </Row>
+                <Row>
+                    <h3 className="artist">{artistName}</h3>
+                </Row>
                 <AudioControls
                     isPlaying={isPlaying}
                     onPrevClick={toPrevTrack}
                     onNextClick={toNextTrack}
                     onPlayPauseClick={setIsPlaying}
                 />
-                <input
-                    type="range"
-                    value={trackProgress}
-                    step="1"
-                    min="0"
-                    max={duration ? duration : `${duration}`}
-                    className="progress"
-                    onChange={(e) => onScrub(e.target.value)}
-                    onMouseUp={onScrubEnd}
-                    onKeyUp={onScrubEnd}
-                    style={{ background: trackStyling }}
-                />
+                <Row>
+                    <input
+                        type="range"
+                        value={trackProgress}
+                        step="1"
+                        min="0"
+                        max={duration ? duration : `${duration}`}
+                        className="progress"
+                        onChange={(e) => onScrub(e.target.value)}
+                        onMouseUp={onScrubEnd}
+                        onKeyUp={onScrubEnd}
+                        style={{background: trackStyling}}
+                    />
+                </Row>
             </div>
-        </div>
+        </Container>
     );
 };
 

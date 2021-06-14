@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useAuth} from "../auth/AuthContext";
+import {Button, Form} from "react-bootstrap";
 
 function TrackForm({artist, errorHandler, onNewTrackHandler}) {
 
@@ -11,7 +12,7 @@ function TrackForm({artist, errorHandler, onNewTrackHandler}) {
 
         const formData = new FormData();
         formData.append('artistId', artist.id);
-        for(let i = 0; i< selectedFiles.length; i++) {
+        for (let i = 0; i < selectedFiles.length; i++) {
             formData.append('files', selectedFiles[i])
         }
 
@@ -36,10 +37,13 @@ function TrackForm({artist, errorHandler, onNewTrackHandler}) {
     }
 
     return (
-        <form onSubmit={onSubmitHandler}>
-            <input type={"file"} accept={".mp3"} multiple onChange={(e) => setSelectedFiles(e.target.files)}/>
-            <input type={"submit"}/>
-        </form>
+        <Form onSubmit={onSubmitHandler}>
+            <Form.Group>
+                <Form.Control type={"file"} accept={".mp3"} multiple
+                              onChange={(e) => setSelectedFiles(e.target.files)}/>
+            </Form.Group>
+            <Button type={"submit"}>Save</Button>
+        </Form>
     )
 }
 

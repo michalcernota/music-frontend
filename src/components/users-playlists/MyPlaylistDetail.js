@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {useAuth} from "../auth/AuthContext";
 import AudioPlayer from "../player/AudioPlayer";
+import {Alert, Container} from "react-bootstrap";
 
 function MyPlaylistDetail({match}) {
     const [error, setError] = useState("");
@@ -24,12 +25,12 @@ function MyPlaylistDetail({match}) {
     }, [])
 
     return (
-        <div>
+        <Container>
             {isPending && "Loading data..."}
-            {error && <div>{error}</div>}
+            {error && <Alert type={"danger"}>{error}</Alert>}
 
             {(!isPending && tracks.length > 0) && <AudioPlayer tracks={tracks}/>}
-        </div>
+        </Container>
     )
 
 }

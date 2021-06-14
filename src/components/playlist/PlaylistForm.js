@@ -1,17 +1,18 @@
 import {useState} from "react";
 import {useAuth} from "../auth/AuthContext";
+import {Alert, Button, Form, Row} from "react-bootstrap";
 
 function PlaylistForm({onNewPlaylist}) {
 
     const [playlistName, setPlaylistName] = useState("");
-    const [isError, setIsError] = useState(false);
+    const [error, setError] = useState("");
     const {user, token} = useAuth();
 
     const onSubmitHandler = event => {
         event.preventDefault();
 
         if (!user) {
-            setIsError("You are not logged in.");
+            setError("You are not logged in.");
             return;
         }
 
@@ -39,7 +40,7 @@ function PlaylistForm({onNewPlaylist}) {
                 onNewPlaylist(newPlaylist);
             })
             .catch((err) => {
-                setIsError(err.message);
+                setError(err.message);
             })
             .finally(() => {
                 setPlaylistName("");
@@ -47,20 +48,19 @@ function PlaylistForm({onNewPlaylist}) {
     }
 
     return (
-        <>
-            <form onSubmit={onSubmitHandler}>
-                <input placeholder={'Playlist name'} type={'text'} value={playlistName} onChange={
+        <Row className={"mt-5 mb-5"}>
+            <Form onSubmit={onSubmitHandler}>
+                <Form.Control placeholder={'Playlist name'} type={'text'} value={playlistName} onChange={
                     (e) => {
                         setPlaylistName(e.target.value)
                     }
                 }/>
-                <input type={'submit'}/>
-            </form>
+                <Button className={"mt-2"} variant={"primary"} type={'submit'}>Save</Button>
+            </Form>
 
-            {isError}
-        </>
+            {error && <Alert className={"mt-2"} variant={"primary"}>{error.message}</Alert>}
+        </Row>
     )
-
 }
 
 export default PlaylistForm;

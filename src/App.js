@@ -6,14 +6,12 @@ import {
     Link
 } from "react-router-dom";
 import ArtistDetail from "./components/artist/ArtistDetail";
-import Tracks from "./components/track/Tracks";
 import Playlists from "./components/playlist/Playlists";
 import LoginForm from "./components/auth/LoginForm";
 import {useAuth} from "./components/auth/AuthContext";
 import SignUp from "./components/auth/Signup";
 import Artists from "./components/artist/Artists";
 import PlaylistDetail from "./components/playlist/PlaylistDetail";
-import Profile from "./components/auth/Profile";
 import Logout from "./components/auth/Logout";
 import UsersPlaylists from "./components/users-playlists/UsersPlaylists";
 import MyPlaylistDetail from "./components/users-playlists/MyPlaylistDetail";
@@ -32,10 +30,8 @@ function App() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/artists">Artists</Nav.Link>
-                        <Nav.Link as={Link} to="/tracks">Tracks</Nav.Link>
                         <Nav.Link as={Link} to="/playlists">Playlists</Nav.Link>
                         <Nav.Link as={Link} to="/user/playlists">My playlists</Nav.Link>
-                        <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
                         <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
@@ -44,12 +40,6 @@ function App() {
             <Switch>
                 <Route path="/logout">
                     <Logout/>
-                </Route>
-                <Route path='/profile'>
-                    <Profile/>
-                </Route>
-                <Route path='/tracks'>
-                    <Tracks/>
                 </Route>
                 <Route path='/artist-detail/:id' component={ArtistDetail}/>
                 <Route path="/artists">
@@ -75,7 +65,6 @@ function App() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/artists">Artists</Nav.Link>
-                        <Nav.Link as={Link} to="/tracks">Tracks</Nav.Link>
                         <Nav.Link as={Link} to="/playlists">Playlists</Nav.Link>
                         <Nav.Link as={Link} to="/login">Login</Nav.Link>
                         <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
@@ -84,9 +73,6 @@ function App() {
             </Navbar>
 
             <Switch>
-                <Route path='/tracks'>
-                    <Tracks/>
-                </Route>
                 <Route path='/login'>
                     <LoginForm/>
                 </Route>

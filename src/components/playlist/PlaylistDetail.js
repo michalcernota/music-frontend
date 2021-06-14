@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {useAuth} from "../auth/AuthContext";
+import {Alert, Button, Col, Container, Row} from "react-bootstrap";
 
 function PlaylistDetail({match}) {
 
@@ -30,7 +31,7 @@ function PlaylistDetail({match}) {
         fetch(`${process.env.REACT_APP_BASE_URI}/tracks`)
             .then(response => response.json())
             .then(json => {
-                    setAllTracks(json);
+                setAllTracks(json);
             })
             .catch((err) => setError(err.message))
             .finally(() => setIsPending(false));
@@ -52,73 +53,38 @@ function PlaylistDetail({match}) {
     }
 
     return (
-        <div>
+        <Container className={"mt-3"}>
             {isPending && "Loading data..."}
-            {error && <div>{error}</div>}
+            {error && <Alert type={"danger"}>{error}</Alert>}
 
-            <div>
+            <Row>
                 <h2>{playlist && playlist.name}</h2>
-                <h2>Owner: {playlist && playlist.ownerName}</h2>
-                <h2>{tracksCount} tracks</h2>
-            </div>
+            </Row>
+            <Row>
+                <h4>Owner: {playlist && playlist.ownerName}</h4>
+            </Row>
+            <Row>
+                <h4>{tracksCount} tracks</h4>
+            </Row>
 
-            <h2>Tracks of playlist</h2>
+            <Row className={"mt-5"}>
+                <h2>Tracks of playlist</h2>
+            </Row>
             {tracks.map(item => {
                 return (
-                    <div key={item.id}>
-                        {item.trackName}
+                    <Row className={"mt-1"} key={item.id}>
+                        <Col>
+                            {item.trackName}
+                        </Col>
                         {user && playlist.ownerName === user.sub &&
-                        <button onClick={() => {
+                        <Col>
+                            <Button variant={"primary"} onClick={() => {
 
-                            fetch(`${process.env.REACT_APP_BASE_URI}/playlists/tracks/${item.id}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': 'Bearer ' + token
-                                }
-                            })
-                                .then(r => {
-                                    if (r.ok) {
-                                        return r.json();
-                                    }
-                                    throw new Error("Unable to get data: " + r.statusText);
-                                })
-                                .then(json => {
-                                    console.log(json);
-                                    onRemoveTrackFromPlaylist(json);
-                                    setError("");
-                                })
-                                .catch((err) => {
-                                    setError(err.message)
-                                });
-
-                        }}>Remove</button>
-                        }
-                    </div>
-                )
-            })}
-
-            {user && user.sub === playlist.ownerName &&
-            <div>
-                <h2>All tracks</h2>
-                {allTracks.map(item => {
-                    return (
-                        <div key={item.id}>
-                            {item.name}
-                            {user && playlist.ownerName === user.sub &&
-                            <button onClick={() => {
-                                const trackOfPlaylist = {
-                                    trackId: item.id,
-                                    playlistId: playlist.id,
-                                    trackName: item.name
-                                }
-
-                                fetch(`${process.env.REACT_APP_BASE_URI}/playlists/tracks`, {
-                                    method: 'POST',
+                                fetch(`${process.env.REACT_APP_BASE_URI}/playlists/tracks/${item.id}`, {
+                                    method: 'DELETE',
                                     headers: {
-                                        'Content-Type': 'application/json',
                                         'Authorization': 'Bearer ' + token
-                                    },
-                                    body: JSON.stringify(trackOfPlaylist)
+                                    }
                                 })
                                     .then(r => {
                                         if (r.ok) {
@@ -127,21 +93,72 @@ function PlaylistDetail({match}) {
                                         throw new Error("Unable to get data: " + r.statusText);
                                     })
                                     .then(json => {
-                                        trackOfPlaylist.id = json.id;
-                                        onAddTrackToPlaylist(trackOfPlaylist);
+                                        console.log(json);
+                                        onRemoveTrackFromPlaylist(json);
                                         setError("");
                                     })
                                     .catch((err) => {
                                         setError(err.message)
                                     });
 
-                            }}>Add</button>
+                            }}>Remove</Button>
+                        </Col>
+                        }
+                    </Row>
+                )
+            })}
+
+            {user && user.sub === playlist.ownerName &&
+            <>
+                <Row>
+                    <h2>All tracks</h2>
+                </Row>
+                {allTracks.map(item => {
+                    return (
+                        <Row className={"mt-1"} key={item.id}>
+                            <Col>
+                                {item.name}
+                            </Col>
+                            {user && playlist.ownerName === user.sub &&
+                            <Col>
+                                <Button onClick={() => {
+                                    const trackOfPlaylist = {
+                                        trackId: item.id,
+                                        playlistId: playlist.id,
+                                        trackName: item.name
+                                    }
+
+                                    fetch(`${process.env.REACT_APP_BASE_URI}/playlists/tracks`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Authorization': 'Bearer ' + token
+                                        },
+                                        body: JSON.stringify(trackOfPlaylist)
+                                    })
+                                        .then(r => {
+                                            if (r.ok) {
+                                                return r.json();
+                                            }
+                                            throw new Error("Unable to get data: " + r.statusText);
+                                        })
+                                        .then(json => {
+                                            trackOfPlaylist.id = json.id;
+                                            onAddTrackToPlaylist(trackOfPlaylist);
+                                            setError("");
+                                        })
+                                        .catch((err) => {
+                                            setError(err.message)
+                                        });
+
+                                }}>Add</Button>
+                            </Col>
                             }
-                        </div>
+                        </Row>
                     )
                 })}
-            </div>}
-        </div>)
+            </>}
+        </Container>)
 }
 
 export default PlaylistDetail;

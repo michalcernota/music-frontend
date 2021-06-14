@@ -57,26 +57,22 @@ function SignUp() {
                 <Col className={"mt-3"}>
                     <Form onSubmit={signUpHandler}>
                         <Form.Group controlId="formUsername">
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control type={"text"} onChange={(e) => {
+                            <Form.Control placeholder={"Username"} type={"text"} onChange={(e) => {
                                 setUsername(e.target.value)
                             }}/>
                         </Form.Group>
                         <Form.Group controlId="formEmail">
-                            <Form.Label>E-Mail</Form.Label>
-                            <Form.Control type={"email"} onChange={(e) => {
+                            <Form.Control placeholder={"E-Mail"} type={"email"} onChange={(e) => {
                                 setEmail(e.target.value)
                             }}/>
                         </Form.Group>
                         <Form.Group controlId="formPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type={"password"} onChange={(e) => {
+                            <Form.Control placeholder={"Password"} type={"password"} onChange={(e) => {
                                 setPassword(e.target.value)
                             }}/>
                         </Form.Group>
                         <Form.Group controlId="formConfirmPassword">
-                            <Form.Label>Confirm password</Form.Label>
-                            <Form.Control type={"password"} onChange={(e) => {
+                            <Form.Control placeholder={"Confirm password"} type={"password"} onChange={(e) => {
                                 setConfirmedPassword(e.target.value)
                             }}/>
                         </Form.Group>

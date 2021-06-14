@@ -1,10 +1,12 @@
+import {Row} from "react-bootstrap";
+
 const AudioControls = ({
                            isPlaying,
                            onPlayPauseClick,
                            onPrevClick,
                            onNextClick
                        }) => (
-    <div className="audio-controls">
+    <Row className="mt-2">
         <button
             type="button"
             className="prev"
@@ -40,7 +42,7 @@ const AudioControls = ({
         >
             Next
         </button>
-    </div>
+    </Row>
 );
 
 export default AudioControls;

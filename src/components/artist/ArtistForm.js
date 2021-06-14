@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useAuth} from "../auth/AuthContext";
+import {Alert, Button, Col, Container, Form, FormGroup, Row} from "react-bootstrap";
 
 function ArtistForm({onNewArtist}) {
     const [name, setName] = useState("")
@@ -49,20 +50,29 @@ function ArtistForm({onNewArtist}) {
     }
 
     return (
-        <div>
-            {error && <div>{error}</div>}
-
-            <form onSubmit={onSubmitHandler}>
-                <input placeholder={"Name"} type={"text"} value={name} onChange={(e) => {
-                    setName(e.target.value)
-                }}/>
-                <input placeholder={"Nationality"} type={"text"} value={nationality} onChange={(e) => {
-                    setNationality(e.target.value)
-                }}/>
-                <input type="file" accept={'image/png'} name="file" onChange={(e) => setSelectedFile(e.target.files[0])}/>
-                <input type={"submit"}/>
-            </form>
-        </div>
+        <Container>
+            <Row>
+                <Col>
+                    <Form onSubmit={onSubmitHandler}>
+                        <FormGroup>
+                            <Form.Control placeholder={"Name"} type={"text"} value={name} className={"mt-3"} onChange={(e) => {
+                                setName(e.target.value)
+                            }}/>
+                            <Form.Control placeholder={"Nationality"} type={"text"} value={nationality} className={"mt-3"}
+                                          onChange={(e) => {
+                                              setNationality(e.target.value)
+                                          }}/>
+                            <Form.File type="file" accept={'image/png'} name="file" className={"mt-3"}
+                                          onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Button variant={"primary"} type={"submit"} className={"mt-3"}>Save</Button>
+                        </FormGroup>
+                    </Form>
+                    {error && <Alert type={"danger"} className={"mt-3"}>{error}</Alert>}
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

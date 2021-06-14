@@ -1,12 +1,13 @@
 import {useAuth} from "../auth/AuthContext";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import {Alert, Button, Col, Container, Row} from "react-bootstrap";
 
 function UsersPlaylists() {
     const [data, setData] = useState([]);
     const [error, setError] = useState();
     const [isPending, setIsPending] = useState(true);
-    const { token } = useAuth()
+    const {token} = useAuth()
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_BASE_URI}/user/playlists`,
@@ -34,36 +35,45 @@ function UsersPlaylists() {
     }
 
     return (
-        <div>
+        <Container>
             {isPending && "Loading data..."}
-            {error && <div>{error}</div>}
+            {error && <Alert type={"danger"}>{error}</Alert>}
 
-            <h2>My Playlists</h2>
+            <Row>
+                <Col>
+                    <h2>My Playlists</h2>
+                </Col>
+            </Row>
             {data.map(item => {
-                return(
-                    <div key={item.id}>
-                        <Link to={`/player/${item.id}`}><h2>{item.playlistName}</h2></Link>
-
-                        <button onClick={() => {
-                            fetch(`${process.env.REACT_APP_BASE_URI}/user/playlists/${item.id}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': 'Bearer ' + token
-                                }
-                            })
-                                .then(r => {
-                                    if (r.ok) {
-                                        onDeletePlaylistHandler(item.id);
-                                        return;
+                return (
+                    <Row key={item.id}>
+                        <Col>
+                            <Link to={`/player/${item.id}`}><h2>{item.playlistName}</h2></Link>
+                        </Col>
+                        <Col>
+                            <Button onClick={() => {
+                                fetch(`${process.env.REACT_APP_BASE_URI}/user/playlists/${item.id}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Authorization': 'Bearer ' + token
                                     }
-                                    throw new Error("Unable to get data: " + r.statusText);
                                 })
-                                .catch((err) => {setError(err.message)});
-                        }}>Remove</button>
-                    </div>
+                                    .then(r => {
+                                        if (r.ok) {
+                                            onDeletePlaylistHandler(item.id);
+                                            return;
+                                        }
+                                        throw new Error("Unable to get data: " + r.statusText);
+                                    })
+                                    .catch((err) => {
+                                        setError(err.message)
+                                    });
+                            }}>Remove</Button>
+                        </Col>
+                    </Row>
                 )
             })}
-        </div>
+        </Container>
     )
 }
 

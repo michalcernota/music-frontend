@@ -51,7 +51,7 @@ function LoginForm() {
     } else {
         return (
             <Container>
-                <Row className={"mt-2"}>
+                <Row className={"mt-3"}>
                     <Col>
                         <h2>Login</h2>
                     </Col>
@@ -60,12 +60,10 @@ function LoginForm() {
                     <Col>
                         <Form onSubmit={postLogin}>
                             <Form.Group controlId="formUsername">
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control name={"username"} type={"text"} placeholder={"Enter username"}
+                                <Form.Control name={"username"} type={"text"} placeholder={"Username"}
                                               onChange={handleInputChange}/>
                             </Form.Group>
                             <Form.Group controlId="formPassword">
-                                <Form.Label>Password</Form.Label>
                                 <Form.Control name={"password"} type={"password"} placeholder="Password"
                                               onChange={handleInputChange}/>
                             </Form.Group>
