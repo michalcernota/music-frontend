@@ -1,3 +1,11 @@
+# Music-share
+Aplikace pro sdílení hudebních playlistů mezi uživateli a přehrávání skladeb.
+
+# Adresy
+[Github](https://github.com/michalcernota/music-frontend)
+
+[Produkce](https://music-share-nnpia.herokuapp.com/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
