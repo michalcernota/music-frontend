@@ -49,7 +49,7 @@ function Playlists() {
                     <Row key={item.id}>
                         <Link to={`playlist-detail/${item.id}`}><h2>{item.name}</h2></Link>
 
-                        {user && item && item.ownerName !== user.sub &&
+                        {user && item && item.ownerName === user.sub &&
                         <Col>
                             <Button variant={"primary"} onClick={() => {
                                 fetch(`${process.env.REACT_APP_BASE_URI}/playlists/${item.id}`, {
